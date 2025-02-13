@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پنل ادمین - مدیریت تیکت‌ها</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fc;
+            margin: 0;
+            padding: 0;
+            direction: rtl;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            margin: 50px auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 30px;
+            color: #3498db;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .ticket-list {
+            margin-top: 40px;
+        }
+
+        .ticket {
+            background-color: #fafafa;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .ticket-header {
+            font-size: 20px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .ticket-status {
+            font-size: 14px;
+            color: #777;
+            margin-top: 10px;
+        }
+
+        .ticket-response {
+            margin-top: 15px;
+        }
+
+        .ticket-response textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+            font-size: 14px;
+        }
+
+        .ticket-response button {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .ticket-response button:hover {
+            background-color: #2980b9;
+        }
+
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 14px;
+            color: #888;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>پنل ادمین - مدیریت تیکت‌ها</h1>
+
+        <!-- لیست تیکت‌ها -->
+        <div class="ticket-list" id="ticketList">
+            <h2>تیکت‌های کاربران</h2>
+            <!-- تیکت‌ها به‌صورت پویا در اینجا نمایش داده می‌شوند -->
+        </div>
+
+        <div class="footer">
+            <p>تمامی حقوق محفوظ است - [نام سایت شما] 2025</p>
+        </div>
+    </div>
+
+    <script>
+        // ذخیره تیکت‌ها در localStorage برای شبیه‌سازی ذخیره‌سازی تیکت‌ها
+        const ticketList = document.getElementById('ticketList');
+
+        // بارگذاری تیکت‌ها
+        function loadTickets() {
+            const tickets = JSON.parse(localStorage.getItem('tickets')) || [];
+            ticketList.innerHTML = '';
+            tickets.forEach((ticket, index) => {
+                const ticketDiv = document.createElement('div');
+                ticketDiv.classList.add('ticket');
+                ticketDiv.innerHTML = `
+                    <div class="ticket-header">${ticket.title}</div>
+                    <p>${ticket.description}</p>
+                    <div class="ticket-status">وضعیت: ${ticket.status}</div>
+                    <div class="ticket-response">
+                        <textarea id="response-${index}" placeholder="پاسخ به تیکت" rows="4"></textarea>
+                        <button onclick="respondToTicket(${index})">پاسخ</button>
+                    </div>
+                `;
+                ticketList.appendChild(ticketDiv);
+            });
+        }
+
+        // پاسخ به تیکت
+        function respondToTicket(index) {
+            const response = document.getElementById(`response-${index}`).value;
+
+            // دریافت تیکت‌ها از localStorage
+            const tickets = JSON.parse(localStorage.getItem('tickets')) || [];
+
+            // اضافه کردن پاسخ به تیکت
+            tickets[index].response = response;
+            tickets[index].status = 'پاسخ داده شده';
+
+            // ذخیره مجدد تیکت‌ها در localStorage
+            localStorage.setItem('tickets', JSON.stringify(tickets));
+
+            // بارگذاری دوباره تیکت‌ها
+            loadTickets();
+        }
+
+        // بارگذاری تیکت‌ها هنگام بارگذاری صفحه
+        loadTickets();
+    </script>
+
+</body>
+</html>

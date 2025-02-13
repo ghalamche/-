@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قلم نویس </title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            height: 100%;
+        }
+
+        header {
+            background-color: #ffffff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        header .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #3498db;
+        }
+
+        header .nav-links a {
+            margin-left: 20px;
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        header .nav-links a:hover {
+            color: #3498db;
+        }
+
+        header .auth-links a {
+            margin-left: 20px;
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+            border: 2px solid #3498db;
+            padding: 8px 15px;
+            border-radius: 25px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        header .auth-links a:hover {
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        .profile-container {
+            display: none;
+            margin-top: 100px;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .profile-info {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            width: 85%;
+            max-width: 650px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .profile-info .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 20px;
+            border: 3px solid #3498db;
+            display: inline-block;
+        }
+
+        .profile-info .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-info .profile-details {
+            display: inline-block;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .profile-info h2 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .profile-info .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .profile-info .stats div {
+            text-align: center;
+            font-size: 18px;
+            color: #777;
+        }
+
+        .profile-info .stats div strong {
+            font-size: 22px;
+            color: #3498db;
+        }
+
+        .back-button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #2980b9;
+        }
+
+        .form-container {
+            max-width: 650px;
+            margin: 50px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-container button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+
+        .form-container button:hover {
+            background-color: #2980b9;
+        }
+
+        .footer-nav {
+            background-color: #ffffff;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-around;
+            padding: 15px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            left: 0;
+        }
+
+        .footer-nav .icon {
+            text-align: center;
+            font-size: 22px;
+            color: #333;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .footer-nav .icon:hover {
+            color: #3498db;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">شبکه اجتماعی</div>
+    <div class="nav-links" id="navLinks">
+        <p href="home.html">قوانیین و مقررات</p>
+        <a href="home.html">قوانین و مقررات</a>       <a href="support.html">پشتیبانی</a>
+        <a href="#" id="profileLink" style="display:none;">پروفایل</a>
+    </div>
+    <div class="auth-links" id="authLinks">
+
+    </div>
+</header>
+
+<!-- صفحه ثبت‌نام -->
+<div class="form-container" id="signupPage">
+    <h2>ثبت نام</h2>
+    <form id="signupForm">
+        <input type="text" id="username" placeholder="نام کاربری" required>
+        <input type="text" id="userId" placeholder="آیدی" required>
+        <input type="email" id="email" placeholder="ایمیل" required>
+        <input type="password" id="password" placeholder="رمز عبور" required>
+        <input type="file" id="profilePic" accept="image/*" placeholder="عکس پروفایل">
+        <button type="submit">ثبت‌نام</button>
+    </form>
+</div>
+
+<!-- صفحه پروفایل -->
+<div class="profile-container" id="profilePage">
+    <div class="profile-info">
+        <button class="back-button" id="backButton">بازگشت</button>
+        <div class="avatar">
+            <img src="" id="profilePicDisplay" alt="پروفایل">
+        </div>
+        <div class="profile-details">
+            <h2 id="profileUsername">نام کاربری</h2>
+            <p id="profileUserId">آیدی: @username</p>
+        </div>
+        <div class="stats">
+            <div><strong id="profilePosts">0</strong><br>پست‌ها</div>
+            <div><strong id="profileFollowers">0</strong><br>فالوورها</div>
+            <div><strong id="profileFollowing">0</strong><br>فالویینگ‌ها</div>
+        </div>
+    </div>
+</div>
+
+<!-- فوتر -->
+<div class="footer-nav">
+    <div class="icon">🏠</div>
+    <div class="icon">🔔</div>
+    <div class="icon">✏️</div>
+    <div class="icon">🔍</div>
+    <div class="icon">⚙️</div>
+</div>
+
+<script>
+    const profileLink = document.getElementById("profileLink");
+    const authLinks = document.getElementById("authLinks");
+    const signupPage = document.getElementById("signupPage");
+    const profilePage = document.getElementById("profilePage");
+    const backButton = document.getElementById("backButton");
+    const profilePicDisplay = document.getElementById("profilePicDisplay");
+    const profileUsername = document.getElementById("profileUsername");
+    const profileUserId = document.getElementById("profileUserId");
+    const profilePosts = document.getElementById("profilePosts");
+    const profileFollowers = document.getElementById("profileFollowers");
+    const profileFollowing = document.getElementById("profileFollowing");
+    const loginLink = document.getElementById("loginLink");
+    const signupLink = document.getElementById("signupLink");
+
+    // وقتی کاربر وارد یا ثبت نام می‌کند
+    function userLoggedIn(userData) {
+        // حذف تمام دکمه‌ها و منوهای ثبت‌نام و ورود
+        authLinks.style.display = "none"; 
+        signupPage.style.display = "none"; // مخفی کردن صفحه ثبت‌نام
+        profilePage.style.display = "flex"; // نمایش پروفایل
+        profileLink.style.display = "block"; // نمایش لینک پروفایل
+
+        // نمایش اطلاعات کاربر
+        profileUsername.textContent = userData.username;
+        profileUserId.textContent = "@"+userData.userId;
+        profileFollowers.textContent = "0"; // تعداد فالوورها
+        profileFollowing.textContent = "0"; // تعداد فالویینگ‌ها
+        profilePosts.textContent = "0"; // تعداد پست‌ها
+        profilePicDisplay.src = userData.profilePic || "https://www.example.com/avatar.jpg"; // نمایش عکس پروفایل
+    }
+
+    // دکمه بازگشت به صفحه اصلی
+    backButton.addEventListener("click", () => {
+        profilePage.style.display = "none";
+        authLinks.style.display = "flex"; // نمایش مجدد دکمه‌های ورود و ثبت‌نام
+    });
+
+    // ثبت‌نام
+    const signupForm = document.getElementById("signupForm");
+    signupForm.addEventListener("submit", function(e) {
+        e.preventDefault(); // جلوگیری از بارگذاری مجدد صفحه
+        const userData = {
+            username: document.getElementById("username").value,
+            userId: document.getElementById("userId").value,
+            profilePic: URL.createObjectURL(document.getElementById("profilePic").files[0])
+        };
+        userLoggedIn(userData); // ورود یا ثبت‌نام موفق
+    });
+
+    // ورود
+    loginLink.addEventListener("click", function() {
+        // اینجا میتونید کدهای مربوط به ورود رو اضافه کنید
+    });
+
+    // صفحه پروفایل
+    profileLink.addEventListener("click", function() {
+        profilePage.style.display = "flex";
+        authLinks.style.display = "none"; // حذف دکمه‌های ورود و ثبت‌نام
+    });
+</script>
+
+</body>
+</html>
